@@ -33,11 +33,13 @@ def search_articles(baseurl):
 
     print("Enter your search term >")
     search_term = input()
-    search_url = (
-        baseurl + f"/search?userid={user_id}&filter={search_filter}&term={search_term}"
-    )
 
-    res = requests.get(search_url)
+    data = {"userid": user_id, "filter": search_filter, "term": search_term}
+    api = "/search"
+    search_url = baseurl + api
+
+    res = requests.get(search_url, json=data)
+
     if res.status_code != 200:
         # failed:
         print("Failed with status code:", res.status_code)
@@ -60,7 +62,5 @@ def search_articles(baseurl):
     print("If you want to download an article, enter the article ID >")
     wanted_article_id = input()
     if wanted_article_id not in body["data"].keys():
-        print("Invalid article id. Exiting...")
-        return
         print("Invalid article id. Exiting...")
         return
