@@ -185,5 +185,3 @@ def save_article(baseurl, nyt_obj, user_id):
         return
 
     ## Send save api call to server, with data in the body of request
-    ## Send save api call to server, with data in the body of request        ## Send save api call to server, with data in the body of request
-    ## Send save api call to server, with data in the body of request
