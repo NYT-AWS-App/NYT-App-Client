@@ -58,9 +58,4 @@ def search_articles(baseurl):
         print("  " + art_data["author"])
         print("  " + art_data["pubdate"])
         print()
-
-    print("If you want to download an article, enter the article ID >")
-    wanted_article_id = input()
-    if wanted_article_id not in body["data"].keys():
-        print("Invalid article id. Exiting...")
-        return
+    return
