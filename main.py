@@ -3,6 +3,9 @@ import sys
 from configparser import ConfigParser
 
 from add_user import add_user
+from delete_article import delete_article
+from download_article import download_article
+from get_users import get_users
 from nyt_search import nyt_search
 from search_articles import search_articles
 from view_articles import view_articles
@@ -57,12 +60,13 @@ def prompt():
     print()
     print(">> Enter a command:")
     print("   0 => end")
-    print("   1 => add user")  # Write RDS
-    print("   2 => view your saved articles")  # Read RDS
-    print("   3 => delete a saved article")  # Write S3 and RDS
-    print("   4 => NYT search")  # pt1: NYT API, pt2 (if save): Write RDS and S3
-    print("   5 => search your saved articles")  # read RDS
-    print("   6 => download a saved article")  # Write S3, read RDS
+    print("   1 => get users")
+    print("   2 => add user")  # Write RDS
+    print("   3 => view your saved articles")  # Read RDS
+    print("   4 => delete a saved article")  # Write S3 and RDS
+    print("   5 => NYT search")  # pt1: NYT API, pt2 (if save): Write RDS and S3
+    print("   6 => search your saved articles")  # read RDS
+    print("   7 => download a saved article")  # Write S3, read RDS
 
     cmd = int(input())
     return cmd
@@ -112,15 +116,20 @@ baseurl = configur.get("client", "webservice")
 cmd = prompt()
 
 while cmd != 0:
-    #
     if cmd == 1:
-        add_user(baseurl)
+        get_users(baseurl)
     elif cmd == 2:
+        add_user(baseurl)
+    elif cmd == 3:
         view_articles(baseurl)
     elif cmd == 4:
-        nyt_search(baseurl)
+        delete_article(baseurl)
     elif cmd == 5:
+        nyt_search(baseurl)
+    elif cmd == 6:
         search_articles(baseurl)
+    elif cmd == 7:
+        download_article(baseurl)
     else:
         print("** Unknown command, try again...")
     cmd = prompt()
