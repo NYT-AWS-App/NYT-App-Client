@@ -5,13 +5,13 @@ import requests
 
 
 def nyt_search(baseurl):
-    options = ["keyword", "author", "title", "date"]
+    options = ["keyword", "author", "headline", "date"]
     found_filter = False
     search_filter = ""
 
     for _ in range(5):
         print(
-            "What do you want to search by? [Options: keyword, author, title, date] >"
+            "What do you want to search by? [Options: keyword, author, headline, date] >"
         )
         search_filter = input()
         search_filter = search_filter.lower()
