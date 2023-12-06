@@ -22,7 +22,8 @@ def get_users(baseurl):
                 print(user["userid"])
                 print(f"  {user['username']}")
                 print(f"  {user['pwdhash']}")
-                print(f"  {user['bucketfolder']}")
+                print(f"  {user['bucketfolder']}\n")
+
     except Exception as e:
         logging.error("delete_article() failed:")
         logging.error(f"url: {url}")

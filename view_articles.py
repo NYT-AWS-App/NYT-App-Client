@@ -50,9 +50,10 @@ def view_articles(baseurl):
 
         for a in body["articles"]:
             print(a["articleid"])
-            print(" Headline:", a["headline"])
-            print(" URL:", a["url"])
-            print(" By: ", a["authorfirst"], a["authorlast"])
+            print(" ", a["headline"])
+            print(" ", a["url"])
+            print(f"  {a['authorfirst']} {a['authorlast']}")
+            print(f"  {a['pubdate']}\n")
 
     except Exception as e:
         logging.error("articles() failed:")
