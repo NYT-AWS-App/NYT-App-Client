@@ -29,18 +29,7 @@ def nyt_search(baseurl):
     search_term = ""
     valid = False
     for _ in range(5):
-        if search_filter == "author":
-            print("Enter your search term (Format: FirstName LastName)>")
-            search_term = input()
-            search_term = search_term.lower()
-            if re.match(r"^[a-zA-Z]+ [a-zA-Z]+$", search_term):
-                valid = True
-                break
-            else:
-                print(
-                    "Reenter your search term in the correct format (Format: FirstName LastName)>"
-                )
-        elif search_filter == "date":
+        if search_filter == "date":
             print("Enter your search term (Format: YYYY-MM-DD)>")
             search_term = input()
             search_term = search_term.lower()
@@ -103,8 +92,14 @@ def nyt_search(baseurl):
         "byline",
         "_id",
     ]
-    print(len(body["data"]["response"]["docs"]))
+
+    print()
+
     ## Display headlines w/ mapped to numbers
+    if len(body["data"]["response"]["docs"]) == 0:
+        print("No articles found")
+        return
+
     for i, article_chunk in enumerate(body["data"]["response"]["docs"]):
         number_to_nyt_obj[i + 1] = {}
         for name, value in article_chunk.items():
@@ -135,15 +130,19 @@ def nyt_search(baseurl):
                     number_to_nyt_obj[i + 1][name] = value
         print(f'{i+1}.) {number_to_nyt_obj[i + 1]["headline"]}')
 
+    print()
+
     ## Prompt the user and ask if they want to save to their saved articles
-    print("If you want to save an article, enter the story's ID [1-10] >")
+    print(
+        "If you want to save an article, enter the story's ID [1-10]. Otherwise, press Enter. >"
+    )
     article_number = input()
     if (
         not article_number.isnumeric()
         or int(article_number) < 1
         or int(article_number) > 10
     ):
-        print("Exiting...")
+        print("Invalid key. Exiting...")
         return
 
     article_number = int(article_number)
@@ -169,8 +168,10 @@ def save_article(baseurl, nyt_obj, user_id):
     save_url = baseurl + f"/save?userid={user_id}"
     data = json.dumps(nyt_obj)
     res = requests.put(save_url, json=data)
+
     if res.status_code == 200:
-        print("Article saved successfully!")
+        new_articleid = res.json()["articleid"]
+        print(f"Article {new_articleid} saved successfully!")
         return
     elif res.status_code == 203:
         print("Article already saved.")
