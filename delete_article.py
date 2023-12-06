@@ -34,5 +34,3 @@ def delete_article(baseurl):
         logging.error(f"url: {url}")
         logging.error(e)
         return
-
-        return
