@@ -46,7 +46,7 @@ def search_articles(baseurl):
         if res.status_code == 400:
             # we'll have an error message
             body = res.json()
-            print("Error message:", body)
+            print("Error message:", body["message"])
         #
         return
 
