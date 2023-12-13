@@ -4,6 +4,13 @@ import requests
 
 
 def delete_article(baseurl):
+    """
+    Deletes a user's article from the system
+
+    :param baseurl: Core server url
+    :type baseurl: string
+    """
+
     print("Enter a userid:")
     wanted_userid = input()
 
@@ -15,7 +22,7 @@ def delete_article(baseurl):
         url = baseurl + api
         data = {"userid": wanted_userid, "articleid": wanted_articleid}
 
-        res = requests.delete(url, json=data)
+        res = requests.delete(url, json=data, timeout=30)
 
         if res.status_code != 200:
             # failed:

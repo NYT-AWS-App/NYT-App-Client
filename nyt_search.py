@@ -5,6 +5,13 @@ import requests
 
 
 def nyt_search(baseurl):
+    """
+    Performs NYT Search, passing wanted user information to server/NYT API
+
+    :param baseurl: Core server url
+    :type baseurl: string
+    """
+
     options = ["keyword", "author", "headline", "date"]
     found_filter = False
     search_filter = ""
@@ -56,7 +63,7 @@ def nyt_search(baseurl):
         baseurl + f"/nyt_search?search_term={search_term}&search_filter={search_filter}"
     )
 
-    res = requests.get(url)
+    res = requests.get(url, timeout=30)
 
     #
     # let's look at what we got back:
@@ -165,9 +172,20 @@ def nyt_search(baseurl):
 
 
 def save_article(baseurl, nyt_obj, user_id):
+    """
+    Calls to save article to AWS
+
+    :param baseurl: Core server url
+    :type baseurl: string
+    :param nyt_obj: JSON object returned from NYT API
+    :type nyt_obj: dict
+    :param user_id: ID of user saving
+    :type user_id: string
+    """
+
     save_url = baseurl + f"/save?userid={user_id}"
     data = json.dumps(nyt_obj)
-    res = requests.put(save_url, json=data)
+    res = requests.put(save_url, json=data, timeout=30)
 
     if res.status_code == 200:
         new_articleid = res.json()["articleid"]
@@ -184,5 +202,3 @@ def save_article(baseurl, nyt_obj, user_id):
             body = res.json()
             print("Error message:", body)
         return
-
-    ## Send save api call to server, with data in the body of request

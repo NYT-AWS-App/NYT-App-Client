@@ -19,44 +19,16 @@ from view_articles import view_articles
 
 ###################################################################
 #
-# classes
-#
-class User:
-    userid: int
-    username: str
-    pwhash: str
-    bucketfolder: str
-
-
-class Article:
-    articleid: int
-    userid: int
-    url: str
-    headline: str
-    pubdate: str
-    newsdesk: str
-    sectionname: str
-    authorfirst: str
-    authorlast: str
-    bucketkey: str
-
-
-###################################################################
-#
 # prompt
 #
 def prompt():
     """
-    Prompts the user and returns the command number
+    Prompts the user for client options
 
-    Parameters
-    ----------
-    None
-
-    Returns
-    -------
-    Command number entered by user (0, 1, 2, ...)
+    :return: Command to perform
+    :rtype: int
     """
+
     print()
     print(">> Enter a command:")
     print("   0 => end")
@@ -84,7 +56,7 @@ sys.tracebacklimit = 0
 #
 # what config file should we use for this session?
 #
-config_file = "client-config.ini"
+CONFIG_FILE = "client-config.ini"
 
 print("What config file to use for this session?")
 print("Press ENTER to use default (client-config.ini),")
@@ -94,20 +66,20 @@ s = input()
 if s == "":  # use default
     pass  # already set
 else:
-    config_file = s
+    CONFIG_FILE = s
 
 #
 # does config file exist?
 #
-if not pathlib.Path(config_file).is_file():
-    print("**ERROR: config file '", config_file, "' does not exist, exiting")
+if not pathlib.Path(CONFIG_FILE).is_file():
+    print("**ERROR: config file '", CONFIG_FILE, "' does not exist, exiting")
     sys.exit(0)
 
 #
 # setup base URL to web service:
 #
 configur = ConfigParser()
-configur.read(config_file)
+configur.read(CONFIG_FILE)
 baseurl = configur.get("client", "webservice")
 
 #

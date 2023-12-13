@@ -5,15 +5,10 @@ import requests
 
 def view_articles(baseurl):
     """
-    Prints out a user's saved articles
+    Displays a user's saved articles
 
-    Parameters
-    ----------
-    baseurl: baseurl for web service
-
-    Returns
-    -------
-    nothing
+    :param baseurl: Core server url
+    :type baseurl: string
     """
 
     print("Enter a userid:")
@@ -28,7 +23,7 @@ def view_articles(baseurl):
         api = "/articles"
         url = baseurl + api
 
-        res = requests.get(url, json=data)
+        res = requests.get(url, json=data, timeout=30)
 
         #
         # let's look at what we got back:

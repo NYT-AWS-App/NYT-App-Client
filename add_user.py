@@ -7,15 +7,10 @@ import requests
 
 def add_user(baseurl):
     """
-    Inserts new user into RDS
+    Inserts a new user into the system
 
-    Parameters
-    ----------
-    baseurl: baseurl for web service
-
-    Returns
-    -------
-    nothing
+    :param baseurl: Core server url
+    :type baseurl: string
     """
 
     print("Enter a username:")
@@ -35,7 +30,7 @@ def add_user(baseurl):
         api = "/add_user"
         url = baseurl + api
 
-        res = requests.put(url, json=data)
+        res = requests.put(url, json=data, timeout=30)
         #
         # let's look at what we got back:
         #
@@ -60,7 +55,7 @@ def add_user(baseurl):
         print(f"{body['message']} with userid: {body['userid']}")
 
     except Exception as e:
-        logging.error("stats() failed:")
+        logging.error("add_user() failed:")
         logging.error("url: " + url)
         logging.error(e)
         return logging.error(e)

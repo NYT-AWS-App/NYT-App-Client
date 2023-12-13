@@ -2,6 +2,13 @@ import requests
 
 
 def search_articles(baseurl):
+    """
+    Internal search of saved articles
+
+    :param baseurl: Core server url
+    :type baseurl: string
+    """
+
     options = ["headline", "author", "date", "keyword"]
     found_filter = False
     search_filter = ""
@@ -38,7 +45,7 @@ def search_articles(baseurl):
     api = "/search"
     search_url = baseurl + api
 
-    res = requests.get(search_url, json=data)
+    res = requests.get(search_url, json=data, timeout=30)
 
     if res.status_code != 200:
         # failed:
